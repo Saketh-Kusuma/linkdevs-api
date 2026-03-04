@@ -30,14 +30,9 @@ app.use("/auth", auth);
 app.use("/profile", profile);
 app.use("/user", user);
 app.use("/request", request);
-
-// connect DB
-connectToDb()
-  .then(() => {
-    console.log("Connected to DB");
-  })
-  .catch(() => {
-    console.log("Something went wrong");
-  });
+app.use(async (req, res, next) => {
+  await connectToDb();
+  next();
+});
 
 module.exports = app;
